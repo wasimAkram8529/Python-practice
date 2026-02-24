@@ -3,12 +3,29 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+smtp_server = os.getenv('SMTP_SERVER')
+port = int(os.getenv('SMTP_PORT')) # for TLS
+username = os.getenv('USERNAME')
+password = os.getenv('PASSWORD')
+recipient = os.getenv('RECIPIENT')
+recipient2 = os.getenv('RECIPIENT2')
+
+current_dir = os.getcwd()
+parent_dir = os.path.dirname(current_dir)
+log_file_name = "app.log"
+
+log_file_location = os.path.join(parent_dir, log_file_name)
 
 def send_email(subject, body,log_file_path):
-  sender_email = "wasimakramsupaul08@gmail.com"
-  receiver_email = "sonam_skills@pw.live"
-  #receiver_email = "wasimakramsupaul8529@gmail.com"
-  password = "uoji wojx qaqc dbyi"
+  sender_email = username
+  receiver_email = recipient2
+  #receiver_email = recipient
+  password = password
 
   msg = MIMEMultipart(body)
   msg["subject"] = subject
@@ -41,4 +58,4 @@ def send_email(subject, body,log_file_path):
       server.quit()
 
 
-send_email("Backup completed", "Backup created successfully", "/home/wasim/python_dir/app.log")  
+send_email("Backup completed", "Backup created successfully", log_file_location)  
